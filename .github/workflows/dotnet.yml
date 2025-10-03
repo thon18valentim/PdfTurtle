@@ -1,0 +1,36 @@
+name: .NET NuGet Packages
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restaurar dependências
+      run: dotnet restore
+
+    - name: Build e Pack dos projetos
+      run: |
+        dotnet build -c Release
+        dotnet pack PdfTurtle.Writer/PdfTurtle.Writer.csproj -c Release -o out
+
+    - name: Publicar pacotes no GitHub Packages
+      run: |
+        for file in out/*.nupkg
+        do
+          dotnet nuget push "$file" --api-key ${{ secrets.NUGET_TOKEN }} --source "https://nuget.pkg.github.com/thon18valentim/index.json" --skip-duplicate
+        done
