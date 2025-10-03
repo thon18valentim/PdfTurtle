@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PdfTurtle.HtmlRenderer\PdfTurtle.HtmlRenderer.csproj" />
+    <ProjectReference Include="..\PdfTurtle.Writer\PdfTurtle.Writer.csproj" />
+  </ItemGroup>
+
 </Project>
