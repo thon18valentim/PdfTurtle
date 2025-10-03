@@ -4,6 +4,15 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Authors>Othon Valentim</Authors>
+    <Company>Inova Axis</Company>
+    <RepositoryUrl>https://github.com/thon18valentim/PdfTurtle</RepositoryUrl>
+    <Version>1.0.0</Version>
+    <PackageId>PdfTurtle</PackageId>
+    <Description>Cria PDFs utilizando abstrações do QuestPDF, incluindo a partir de HTML.</Description>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
