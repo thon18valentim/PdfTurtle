@@ -34,6 +34,7 @@ var doc = DocumentWriter.FromHtml(html)
 		opt.DefaultFontSize = 10;
 		opt.ParagraphSpacing = 8;
 		opt.ParagraphLineHeight = 1.4f;
+		opt.FooterFontSize = 8;
 	})
 	.CustomizeHeading(h =>
 	{

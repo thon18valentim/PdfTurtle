@@ -33,39 +33,17 @@ namespace PdfTurtle.Writer.HtmlRenderer
 
 		public byte[] Write()
 		{
-			var pdfDocument = Document.Create(container =>
-			{
-				container.Page(page =>
-				{
-					page.Size(options.ConvertPageSize());
-					page.PageColor(Colors.White);
-					page.Margin(2, Unit.Centimetre);
-
-					page.Content().Column(col =>
-					{
-						foreach (var el in elements)
-							RenderElement(col, el);
-
-						col.Item().Row(row =>
-						{
-							row.Spacing(options.SignatureSpacing);
-
-							foreach (var el in elements)
-							{
-								if (el is SignatureElement signatureElement)
-								{
-									row.RelativeItem().Column(c => RenderSignatureField(c, signatureElement.Label));
-								}
-							}
-						});
-					});
-				});
-			});
-
+			var pdfDocument = WriteDocument();
 			return pdfDocument.GeneratePdf();
 		}
 
 		public void WriteToStream(Stream stream)
+		{
+			var pdfDocument = WriteDocument();
+			pdfDocument.GeneratePdf(stream);
+		}
+
+		private Document WriteDocument()
 		{
 			var pdfDocument = Document.Create(container =>
 			{
@@ -93,10 +71,19 @@ namespace PdfTurtle.Writer.HtmlRenderer
 							}
 						});
 					});
+
+					if (!string.IsNullOrWhiteSpace(options.FooterText))
+					{
+						page.Footer()
+							.AlignCenter()
+							.Text(options.FooterText)
+							.FontSize(options.FooterFontSize)
+							.Italic();
+					}
 				});
 			});
 
-			pdfDocument.GeneratePdf(stream);
+			return pdfDocument;
 		}
 
 		private void RenderElement(ColumnDescriptor col, HtmlDocumentElement element)

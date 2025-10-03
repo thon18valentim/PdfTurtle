@@ -10,6 +10,8 @@ namespace PdfTurtle.Writer.Models.Settings
 		public float ParagraphSpacing { get; set; } = 10;
 		public float ParagraphLineHeight { get; set; } = 1.5f;
 		public float SignatureSpacing { get; set; } = 20;
+		public string? FooterText { get; set; } = "Página gerada pelo PdfTurtle © 2025";
+		public float FooterFontSize { get; set; } = 10;
 
 		public PageSize ConvertPageSize()
 		{
