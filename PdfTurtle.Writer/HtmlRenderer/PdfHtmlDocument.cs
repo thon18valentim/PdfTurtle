@@ -65,6 +65,40 @@ namespace PdfTurtle.Writer.HtmlRenderer
 			return pdfDocument.GeneratePdf();
 		}
 
+		public void WriteToStream(Stream stream)
+		{
+			var pdfDocument = Document.Create(container =>
+			{
+				container.Page(page =>
+				{
+					page.Size(options.ConvertPageSize());
+					page.PageColor(Colors.White);
+					page.Margin(2, Unit.Centimetre);
+
+					page.Content().Column(col =>
+					{
+						foreach (var el in elements)
+							RenderElement(col, el);
+
+						col.Item().Row(row =>
+						{
+							row.Spacing(options.SignatureSpacing);
+
+							foreach (var el in elements)
+							{
+								if (el is SignatureElement signatureElement)
+								{
+									row.RelativeItem().Column(c => RenderSignatureField(c, signatureElement.Label));
+								}
+							}
+						});
+					});
+				});
+			});
+
+			pdfDocument.GeneratePdf(stream);
+		}
+
 		private void RenderElement(ColumnDescriptor col, HtmlDocumentElement element)
 		{
 			switch (element)

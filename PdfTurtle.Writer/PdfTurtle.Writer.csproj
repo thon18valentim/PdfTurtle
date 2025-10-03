@@ -7,9 +7,9 @@
     <Authors>Othon Valentim</Authors>
     <Company>Inova Axis</Company>
     <RepositoryUrl>https://github.com/thon18valentim/PdfTurtle</RepositoryUrl>
-    <Version>1.0.1</Version>
+    <Version>1.1.1</Version>
     <PackageId>PdfTurtle.Writer</PackageId>
-    <Description>Cria PDFs utilizando abstrações do QuestPDF, incluindo a partir de HTML.</Description>
+    <Description>Crie PDFs a partir de simples documentos HTML. O PdfTurtle é uma abstração de ferramentas do QuestPDF para escrita de PDFs de forma simplificada.</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <OutputType>Library</OutputType>

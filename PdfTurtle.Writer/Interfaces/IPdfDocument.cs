@@ -6,5 +6,6 @@ namespace PdfTurtle.Writer.Interfaces
 		void Save();
 		void Save(string path);
 		byte[] Write();
+		void WriteToStream(Stream stream);
 	}
 }
