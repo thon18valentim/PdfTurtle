@@ -38,6 +38,22 @@ namespace PdfTurtle.Writer.HtmlRenderer
 						elements.Add(new HorizontalRuleElement());
 						break;
 
+					case "img":
+						var src = node.GetAttributeValue("src", string.Empty);
+						var widthAttr = node.GetAttributeValue("width", string.Empty);
+						var heightAttr = node.GetAttributeValue("height", string.Empty);
+
+						float? width = null;
+						float? height = null;
+
+						if (float.TryParse(widthAttr, out var w))
+							width = w;
+						if (float.TryParse(heightAttr, out var h))
+							height = h;
+
+						elements.Add(new ImageElement(src, width, height));
+						break;
+
 					case "signature":
 						var label = node.GetAttributeValue("label", "Assinatura");
 						elements.Add(new SignatureElement { Label = label, Node = node });

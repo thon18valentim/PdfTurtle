@@ -5,6 +5,11 @@ namespace PdfTurtle.Writer.Models.Settings
 {
 	public class PdfOptions
 	{
+		public float PageMarginTop { get; set; } = 2f;
+		public float PageMarginBottom { get; set; } = 2f;
+		public float PageMarginLeft { get; set; } = 2f;
+		public float PageMarginRight { get; set; } = 2f;
+
 		public EnumPageSizes PageSize { get; set; } = EnumPageSizes.A4;
 		public float DefaultFontSize { get; set; } = 12;
 		public float ParagraphSpacing { get; set; } = 10;

@@ -51,7 +51,11 @@ namespace PdfTurtle.Writer.HtmlRenderer
 				{
 					page.Size(options.ConvertPageSize());
 					page.PageColor(Colors.White);
-					page.Margin(2, Unit.Centimetre);
+
+					page.MarginTop(options.PageMarginTop, Unit.Centimetre);
+					page.MarginBottom(options.PageMarginBottom, Unit.Centimetre);
+					page.MarginLeft(options.PageMarginLeft, Unit.Centimetre);
+					page.MarginRight(options.PageMarginRight, Unit.Centimetre);
 
 					page.Content().Column(col =>
 					{
@@ -122,6 +126,10 @@ namespace PdfTurtle.Writer.HtmlRenderer
 					col.Spacing(options.ParagraphSpacing);
 					break;
 
+				case ImageElement img:
+					RenderImage(col.Item(), img);
+					break;
+
 				case SignatureElement sig:
 					break;
 			}
@@ -178,5 +186,53 @@ namespace PdfTurtle.Writer.HtmlRenderer
 					.Background(Colors.Black);
 			});
 		}
+
+		private static void RenderImage(IContainer container, ImageElement image)
+		{
+			try
+			{
+				if (string.IsNullOrEmpty(image.Source))
+					return;
+
+				byte[] imageData = null;
+
+				if (image.Source.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
+				{
+					var base64Data = image.Source.Substring(image.Source.IndexOf(",") + 1);
+					imageData = Convert.FromBase64String(base64Data);
+				}
+				else if (File.Exists(image.Source))
+				{
+					imageData = File.ReadAllBytes(image.Source);
+				}
+				else if (Uri.IsWellFormedUriString(image.Source, UriKind.Absolute))
+				{
+					using var client = new HttpClient();
+					imageData = client.GetByteArrayAsync(image.Source).Result;
+				}
+
+				if (imageData == null || imageData.Length == 0)
+					return;
+
+				container = container.AlignCenter();
+
+				// define tamanho, se existir
+				if (image.Width.HasValue)
+					container = container.Width(image.Width.Value);
+				if (image.Height.HasValue)
+					container = container.Height(image.Height.Value);
+
+				// largura padrão, caso nada informado
+				if (!image.Width.HasValue && !image.Height.HasValue)
+					container = container.Width(200);
+
+				container.Image(imageData);
+			}
+			catch
+			{
+				// ignora erros de imagem
+			}
+		}
+
 	}
 }

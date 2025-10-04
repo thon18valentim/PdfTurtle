@@ -13,6 +13,8 @@ var email = "email";
 
 var htmlContent = "<p>Hello world</p>";
 var html = $@"
+				<img src=""C:\Users\PC_USER\Downloads\256_back.png"" width=""64"" height=""64"" />
+				
 				<h2>CONTRATO DE LOCAÇÃO</h2>
 				<p>Pelo presente instrumento particular de locação, de um lado, <b>{circuit.ToUpper()}</b>, doravante denominado LOCADORA, com sede em <strong>{address}</strong>, inscrito no CNPJ sob o nº <strong>{cnpj}</strong>; e, de outro lado, o(a) Sr(a). <strong>{clientName}</strong>, portador(a) do CPF nº <strong>{document}</strong>, nascido(a) em <strong>{birthDate}</strong>, residente e domiciliado(a), com e-mail <strong>{email}</strong> e telefone <strong>{phone}</strong>, doravante denominado(a) LOCATÁRIO(A), têm entre si, justas e contratadas, as seguintes condições:</p>
 				<p>O presente contrato tem por objeto a locação de um kart, destinado exclusivamente à prática de lazer e/ou participação em competições organizadas, observando-se rigorosamente todas as normas de segurança exigidas pelas autoridades competentes e regulamentações específicas aplicáveis.</p>
@@ -30,6 +32,9 @@ var html = $@"
 var doc = DocumentWriter.FromHtml(html)
 	.WithDefaults(opt =>
 	{
+		opt.PageMarginTop = 0.5f;
+		opt.PageMarginBottom = 0.5f;
+
 		opt.PageSize = EnumPageSizes.A4;
 		opt.DefaultFontSize = 10;
 		opt.ParagraphSpacing = 8;
